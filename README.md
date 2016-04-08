@@ -28,6 +28,23 @@ In the top of the file node_modules/angular2/src/facade/promise.d.ts add
 ```
 declare var Promise: PromiseConstructor;
 ```
+
+# HERE MAP API keys
+To get the speed limits for your current location, we use Here map APIs. You
+will need to register a free/paid account with them :
+```
+https://developer.here.com/
+
+```
+
+Put your APP ID and APP CODE in the following file:
+```
+#app/services/geolocation.service.ts
+
+private here_map_app_id: string = '<here.map.app.id>';
+private here_map_app_code: string = '<here.map.app.code>';
+
+```
 # Development
 ## Deploy to android
 You must have all the relevant android tools installed, for example adb, and
