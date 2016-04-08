@@ -18,8 +18,8 @@ It reads the following information and displays it on the HUD:
 4. The current roads speed limit, using HERE maps API (requires a subscription,
   which is free within specified usage limits).
 
-![Image](./HUDMode.JPG?raw=true)
-![Image](./RegularMode.JPG?raw=true)
+![Image](./HUDMode.jpg?raw=true)
+![Image](./RegularMode.jpg?raw=true)
 
 # Patches
 A modification must be made to Angular to make it compile until its resolved in
