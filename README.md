@@ -18,6 +18,8 @@ It reads the following information and displays it on the HUD:
 4. The current roads speed limit, using HERE maps API (requires a subscription,
   which is free within specified usage limits).
 
+Once connected you can cycle through 4 HUD mode screens and 1 regular screen by
+tapping on the display.
 ![Image](./HUDMode.jpg?raw=true)
 ![Image](./RegularMode.jpg?raw=true)
 
