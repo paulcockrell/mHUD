@@ -5,8 +5,8 @@ import {Jsonp} from 'angular2/http';
 @Injectable()
 export class GeolocationService {
   private request_url_road_information: string = 'https://legacy.route.cit.api.here.com/routing/6.2/getlinkinfo.json';
-  private here_map_app_id: string = 'UwStla46BWLH8ScOl6V3';
-  private here_map_app_code: string = '2fh5ihUvdlJ0csRT_pjnHQ';
+  private here_map_app_id: string = '<here.map.app.id>';
+  private here_map_app_code: string = '<here.map.app.code>';
 
   polling: boolean = false;
   delay: number = 10000;
