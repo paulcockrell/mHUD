@@ -24,61 +24,61 @@ export class GeolocationService {
 
   constructor(private jsonp: Jsonp) {}
 
-	getShortName(name: string) {
-	  let short_name = name
-	    .replace( /north/g, "N" )
-	    .replace( /east/g, "E" )
-	    .replace( /south/g, "S" )
-	    .replace( /west/g, "W" )
-	    .replace( /by/g, "b" )
-	    .replace( /[\s-]/g, "" );
+  getShortName(name: string) {
+    let short_name = name
+      .replace( /north/g, "N" )
+      .replace( /east/g, "E" )
+      .replace( /south/g, "S" )
+      .replace( /west/g, "W" )
+      .replace( /by/g, "b" )
+      .replace( /[\s-]/g, "" );
 
-	  return short_name;
-	}
+    return short_name;
+  }
 
-	calculatePoint(input: number) {
-	  input = (input / 8) | 0 % 4;
-	  let j: number = input % 8;
-	  let cardinal: string[] = ['north', 'east', 'south', 'west'];
-	  let pointDesc: string[] = ['1', '1 by 2', '1-C', 'C by 1', 'C', 'C by 2', '2-C', '2 by 1'];
-	  let str1: string;
-	  let str2: string;
-	  let strC: string;
-	  let point;
+  calculatePoint(input: number) {
+    input = (input / 8) | 0 % 4;
+    let j: number = input % 8;
+    let cardinal: string[] = ['north', 'east', 'south', 'west'];
+    let pointDesc: string[] = ['1', '1 by 2', '1-C', 'C by 1', 'C', 'C by 2', '2-C', '2 by 1'];
+    let str1: string;
+    let str2: string;
+    let strC: string;
+    let point;
 
-	  str1 = cardinal[input];
-	  str2 = cardinal[( input + 1 ) % 4];
-	  strC = (str1 == cardinal[0] || str1 == cardinal[2]) ? str1 + str2 : str2 + str1;
+    str1 = cardinal[input];
+    str2 = cardinal[( input + 1 ) % 4];
+    strC = (str1 == cardinal[0] || str1 == cardinal[2]) ? str1 + str2 : str2 + str1;
 
-	  point = pointDesc[j]
-	    .replace( /1/, str1 )
-	    .replace( /2/, str2 )
-	    .replace( /C/, strC );
+    point = pointDesc[j]
+      .replace( /1/, str1 )
+      .replace( /2/, str2 )
+      .replace( /C/, strC );
 
-	  return point;
-	}
+    return point;
+  }
 
-	compass() {
-	  let name: string;
-	  let shortName: string;
-	  let input: number;
+  compass() {
+    let name: string;
+    let shortName: string;
+    let input: number;
 
-	  input = this.data.coords ? ( this.data.coords.heading || 1 ) / 11.25 : 1 / 11.25
-	  input = input + .5 | 0
-	  name = this.calculatePoint(input)
-	  shortName = this.getShortName(name)
-	  name = name[0].toUpperCase() + name.slice( 1 )
+    input = this.data.coords ? ( this.data.coords.heading || 1 ) / 11.25 : 1 / 11.25
+    input = input + .5 | 0
+    name = this.calculatePoint(input)
+    shortName = this.getShortName(name)
+    name = name[0].toUpperCase() + name.slice( 1 )
 
-	  return {
+    return {
       name: name,
       shortName: shortName
-	  }
-	}
+    }
+  }
 
   getRoadInformation() {
     let url: string = this.request_url_road_information;
     let data = this.data;
-	  let waypoint = (data.coords.latitude && data.coords.longitude) ? `${data.coords.latitude},${data.coords.longitude}` : null;
+    let waypoint = (data.coords.latitude && data.coords.longitude) ? `${data.coords.latitude},${data.coords.longitude}` : null;
 
     return new Promise((resolve, reject) => {
       if (waypoint === null) resolve(null);
@@ -109,19 +109,19 @@ export class GeolocationService {
     return speedLimit;
   }
 
-	startPolling() {
+  startPolling() {
     this.polling = true;
     this.poll();
   }
 
-   poll() {
+  poll() {
     let that = this;
 
     if (!this.polling) {
       return;
     }
 
-	  navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
       (position) => {
         that.data.coords = position.coords;
         that.data.timestamp = position.timestamp;
@@ -132,37 +132,37 @@ export class GeolocationService {
         console.log(error);
         setTimeout(() => that.poll(), that.delay);
       },
-	    this.options
+      this.options
     );
-	}
+  }
 
-	stopPolling() {
+  stopPolling() {
     this.polling = false;
-	}
+  }
 
-	value(key: string) {
-	  if ( key && Object.hasOwnProperty( key ) ) {
-	    return this.data[key];
+  value(key: string) {
+    if ( key && Object.hasOwnProperty( key ) ) {
+      return this.data[key];
     }
-	  else {
-	    return null;
+    else {
+      return null;
     }
-	}
+  }
 
-	formatValue(value: number, unit: string = '') {
-	  switch (unit.toLowerCase()) {
-	    case 'kph':
+  formatValue(value: number, unit: string = '') {
+    switch (unit.toLowerCase()) {
+      case 'kph':
         return value * 3.6;
-	    case 'mph':
-	      return value * 2.23693629;
-	    default:
+      case 'mph':
+        return value * 2.23693629;
+      default:
         throw new Error('Unknown unit');
-	  }
-	}
+    }
+  }
 
-	gpsEnabled() {
+  gpsEnabled() {
     return (typeof navigator.geolocation !== "undefined" || navigator.geolocation !== null );
-	}
+  }
 }
 
 export interface GeolocationResults {
