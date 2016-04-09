@@ -21,6 +21,7 @@ It reads the following information and displays it on the HUD:
 Once connected you can cycle through 4 HUD mode screens and 1 regular screen by
 tapping on the display.
 ![Image](./HUDMode.jpg?raw=true)
+![Image](./HUDMode2.jpg?raw=true)
 ![Image](./RegularMode.jpg?raw=true)
 
 # Patches
