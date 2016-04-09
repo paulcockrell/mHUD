@@ -81,14 +81,6 @@ export class DashboardPage {
     }, 100)
   }
 
-  private openBluetoothDisabledPage() {
-    // TODO: Create bluetooth disabled page
-  }
-
-  private openGpsDisabledPage() {
-    // TODO: Create gps disabled page
-  }
-
   private disconnect() {
     this.interval_device = null;
     this._gps.stopPolling();
