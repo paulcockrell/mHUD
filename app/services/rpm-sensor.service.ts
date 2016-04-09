@@ -19,7 +19,7 @@ export class RpmSensorService extends SensorService {
   };
 
   value() {
-	  if (this.sensor.raw_data === null) {
+    if (this.sensor.raw_data === null) {
       return null;
     }
 
