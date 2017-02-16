@@ -39,7 +39,9 @@
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
     "cordova-plugin-device-motion",
-    "cordova-plugin-device-orientation"
+    "cordova-plugin-device-orientation",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-compat"
   ],
   "cordovaPlatforms": [
     {

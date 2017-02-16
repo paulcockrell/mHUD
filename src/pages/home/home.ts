@@ -72,8 +72,10 @@ export class HomePage {
 
   startReadSensorData(): void {
     this.requestData = setInterval(() => {
-      this.data = this.sensors.data();  
-      console.log(this.data);
+      let data = this.sensors.data();  
+      this.speed = data.geolocation.coords.speed;
+      this.rpm = 3000;
+      
     }, 100);
   }
 
