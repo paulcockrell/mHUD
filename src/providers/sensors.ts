@@ -116,7 +116,7 @@ export class Sensors {
   private getRoadInformation() {
     let url: string = request_url_road_information;
     let geolocation = this.data().geolocation;
-    let waypoint = (geolocation.coords.latitude && geolocation.coords.longitude) ? `${geolocation.coords.latitude},${geolocation.coords.longitude}` : null;
+    let waypoint = (geolocation.coords && geolocation.coords.latitude && geolocation.coords.longitude) ? `${geolocation.coords.latitude},${geolocation.coords.longitude}` : null;
 
     return new Promise((resolve, reject) => {
       if (waypoint === null) resolve(null);
