@@ -46,6 +46,11 @@ export class HomePage {
   rpm_thousands;
   rpm_hundreds;
 
+  speed: number = 0;
+  speedlimit: number = 0;
+  rpm: number = 0;
+  mirrored: boolean = false;
+
   constructor(
     public navCtrl: NavController,
     private sensors: Sensors,
@@ -62,11 +67,15 @@ export class HomePage {
       })
   }
 
+  mirror() {
+    this.mirrored = !this.mirrored;
+  }
+
   startReadSensorData(): void {
     this.requestData = setInterval(() => {
       this.data = this.sensors.data();  
       console.log(this.data);
-    }, 200);
+    }, 100);
   }
 
   stopReadSensorData(): void {
