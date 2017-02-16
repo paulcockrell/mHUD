@@ -3,13 +3,11 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { Sensors } from '../providers/sensors';
-import { Clock } from '../components/clock/clock';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    Clock
+    HomePage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
