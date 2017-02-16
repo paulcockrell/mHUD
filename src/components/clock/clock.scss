@@ -1,0 +1,813 @@
+//colors
+$color_geyser_approx: #dbe4e6;
+$color_fuscous_gray_approx: #4f4f4f;
+$color_pelorous_approx: #389dc1;
+$color_concrete_approx: #f3f3f3;
+$color_charade_approx: #272e38;
+$black_15: rgba(0,0,0,0.15);
+$color_alto_approx: #dddddd;
+$alabaster: #fafafa;
+$black_8: rgba(0,0,0,0.08);
+$color_pumice_approx: #cacaca;
+$black_30: rgba(0,0,0,0.3);
+$color_vulcan_approx: #0f1620;
+$color_tuna_approx: #2d3642;
+$color_sundown_approx: #f6a7b3;
+$color_wewak_approx: #f0a3af;
+$color_celeste_approx: #ccc;
+$white: #fff;
+$color_log_cabin_approx: #1f1f1f;
+$color_woodsmoke_approx: #101010;
+$black_40: rgba(0,0,0,0.4);
+$color_silver_approx: #bfbfbf;
+$color_green: #00ff00;
+$color_red: #ff0000;
+$color_blue: #00ffff;
+$color_black: #000000;
+
+//fonts
+$font_0: Arial;
+$font_1: Helvetica;
+$font_2: sans-serif;
+
+//@extend-elements
+//original selectors
+//#clock .digits div span:before, #clock .digits div span:after
+%extend_1 {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	border: 5px solid transparent;
+}
+
+//original selectors
+//#clock .digits div.dots:before, #clock .digits div.dots:after
+%extend_2 {
+	width: 5px;
+	height: 5px;
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 14px;
+}
+
+%mirror {
+    transform: matrix(-1,0,0,1,0,0);
+}
+
+#clock {
+	width: 600px;
+	height: 200px;
+	padding: 10%;
+	margin: auto;
+	position: relative;
+  box-sizing: content-box;
+	&:after {
+		content: '';
+		position: absolute;
+		width: 400px;
+		height: 20px;
+		//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+		border-radius: 100%;
+		left: 50%;
+		margin-left: -200px;
+		bottom: 2px;
+		z-index: -1;
+	}
+	.clear {
+		opacity: 0;
+	}
+	.display {
+		text-align: center;
+		padding: 40px 20px 20px;
+		//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+		border-radius: 6px;
+		position: relative;
+		height: 170px;
+    box-sizing: content-box;
+		.speed-limit {
+			position: absolute;
+			height: 130px;
+			width: 250px;
+			top: 77px;
+			left: 368px;
+			padding: 10px;
+		}
+		.speed {
+			position: absolute;
+			height: 130px;
+			width: 250px;
+			top: 50px;
+			left: 20px;
+			padding: 10px;
+		}
+		.rpm {
+			position: absolute;
+			height: 70px;
+			width: 210px;
+			top: 77px;
+			right: 132px;
+			padding: 10px;
+		}
+    .digits {
+      box-sizing: content-box;
+			.speed_unit {
+				padding-top: 17px !important;
+			}
+			.speed_limit_unit {
+				padding-top: 38px !important;
+			}
+			.rpm_unit {
+				padding-top: 38px !important;
+			}
+			.unit {
+				padding-top: 5px;
+				width: 100%;
+				font-style: italic;
+				font-weight: 900;
+				text-align: center;
+			}
+    }
+	}
+	&.light {
+		background-color: $color_black;
+		color: $color_black;
+		&:after {
+			//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+			box-shadow: 0 4px 10px $black_15;
+		}
+		.display {
+			background-color: $color_alto_approx;
+		}
+		.digits div {
+			span {
+				background-color: $color_charade_approx;
+				border-color: $color_charade_approx;
+			}
+			&.dots {
+				&:before {
+					background-color: $color_charade_approx;
+				}
+				&:after {
+					background-color: $color_charade_approx;
+				}
+			}
+			&.decimal {
+				&:after {
+					background-color: $color_charade_approx;
+				}
+			}
+		}
+	}
+	&.dark {
+		@extend %mirror;
+		background-color: $color_black;
+		color: $white;
+		&:after {
+			//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+			box-shadow: 0 4px 10px $black_30;
+		}
+		.display {
+			background-color: $color_black;
+		}
+		.digits div {
+			span {
+				background-color: $white;
+				border-color: $white;
+			}
+			&.dots {
+				&:before {
+					background-color: $white;
+				}
+				&:after {
+					background-color: $white;
+				}
+			}
+			&.decimal {
+				&:after {
+					background-color: $white;
+				}
+			}
+		}
+	}
+	&.blue {
+		@extend %mirror;
+		background-color: $color_black;
+		color: $color_blue;
+		&:after {
+			//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+			box-shadow: 0 4px 10px $black_30;
+		}
+		.display {
+			background-color: $color_black;
+		}
+		.digits div {
+			span {
+				background-color: $color_blue;
+				border-color: $color_blue;
+			}
+			&.dots {
+				&:before {
+					background-color: $color_blue;
+				}
+				&:after {
+					background-color: $color_blue;
+				}
+			}
+			&.decimal {
+				&:after {
+					background-color: $color_blue;
+				}
+			}
+		}
+	}
+	&.red {
+		@extend %mirror;
+		background-color: $color_black;
+		color: $color_red;
+		&:after {
+			//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+			box-shadow: 0 4px 10px $black_30;
+		}
+		.display {
+			background-color: $color_black;
+		}
+		.digits div {
+			span {
+				background-color: $color_red;
+				border-color: $color_red;
+			}
+			&.dots {
+				&:before {
+					background-color: $color_red;
+				}
+				&:after {
+					background-color: $color_red;
+				}
+			}
+			&.decimal {
+				&:after {
+					background-color: $color_red;
+				}
+			}
+		}
+	}
+	&.green {
+		@extend %mirror;
+		background-color: $color_black;
+		color: $color_green;
+		&:after {
+			//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+			box-shadow: 0 4px 10px $black_30;
+		}
+		.display {
+			background-color: $color_black;
+		}
+		.digits div {
+			span {
+				background-color: $color_green;
+				border-color: $color_green;
+			}
+			&.dots {
+				&:before {
+					background-color: $color_green;
+				}
+				&:after {
+					background-color: $color_green;
+				}
+			}
+			&.decimal {
+				&:after {
+					background-color: $color_green;
+				}
+			}
+		}
+	}
+	.digits-big {
+		div {
+		  width: 56px !important;
+		  height: 100px !important;
+		  margin: 0 8px !important;
+	  }
+	}
+	.digits.rpm {
+		div {
+			margin: 0 0px;
+		}
+	}
+	.digits.speed-limit {
+		div {
+			margin: 0 0px;
+		}
+	}
+	.digits {
+		div {
+			text-align: left;
+			position: relative;
+			width: 28px;
+			height: 50px;
+			display: inline-block;
+			margin: 0 4px;
+			span {
+				opacity: 0;
+				position: absolute;
+				//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+				transition: 0.20s;
+				&:before {
+					@extend %extend_1;
+				}
+				&:after {
+					@extend %extend_1;
+				}
+			}
+			&.one {
+				.d5, .d5-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+			}
+			&.two {
+				.d1, .d1-big {
+					opacity: 1;
+				}
+				.d5, .d5-big {
+					opacity: 1;
+				}
+				.d2, .d2-big {
+					opacity: 1;
+				}
+				.d6, .d6-big {
+					opacity: 1;
+				}
+				.d3, .d3-big {
+					opacity: 1;
+				}
+			}
+			&.three {
+				.d1, .d1-big {
+					opacity: 1;
+				}
+				.d5, .d5-big {
+					opacity: 1;
+				}
+				.d2, .d2-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+				.d3, .d3-big {
+					opacity: 1;
+				}
+			}
+			&.four {
+				.d5, .d5-big {
+					opacity: 1;
+				}
+				.d2, .d2-big {
+					opacity: 1;
+				}
+				.d4, .d4-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+			}
+			&.five {
+				.d1, .d1-big {
+					opacity: 1;
+				}
+				.d2, .d2-big {
+					opacity: 1;
+				}
+				.d4, .d4-big {
+					opacity: 1;
+				}
+				.d3, .d3-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+			}
+			&.six {
+				.d1, .d1-big {
+					opacity: 1;
+				}
+				.d2, .d2-big {
+					opacity: 1;
+				}
+				.d4, .d4-big {
+					opacity: 1;
+				}
+				.d3, .d3-big {
+					opacity: 1;
+				}
+				.d6, .d6-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+			}
+			&.seven {
+				.d1, .d1-big {
+					opacity: 1;
+				}
+				.d5, .d5-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+			}
+			&.eight {
+				.d1, .d1-big {
+					opacity: 1;
+				}
+				.d2, .d2-big {
+					opacity: 1;
+				}
+				.d3, .d3-big {
+					opacity: 1;
+				}
+				.d4, .d4-big {
+					opacity: 1;
+				}
+				.d5, .d5-big {
+					opacity: 1;
+				}
+				.d6, .d6-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+			}
+			&.nine {
+				.d1, .d1-big {
+					opacity: 1;
+				}
+				.d2, .d2-big {
+					opacity: 1;
+				}
+				.d3, .d3-big {
+					opacity: 1;
+				}
+				.d4, .d4-big {
+					opacity: 1;
+				}
+				.d5, .d5-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+			}
+			&.zero {
+				.d1, .d1-big {
+					opacity: 1;
+				}
+				.d3, .d3-big {
+					opacity: 1;
+				}
+				.d4, .d4-big {
+					opacity: 1;
+				}
+				.d5, .d5-big {
+					opacity: 1;
+				}
+				.d6, .d6-big {
+					opacity: 1;
+				}
+				.d7, .d7-big {
+					opacity: 1;
+				}
+			}
+			&.dots {
+				width: 5px;
+				&:before {
+					@extend %extend_2;
+				}
+				&:after {
+					@extend %extend_2;
+					top: 34px;
+				}
+			}
+			&.decimal {
+				width: 5px;
+				margin: 0px !important;
+				&:after {
+					@extend %extend_2;
+					top: 48px;
+				}
+			}
+		}
+		.d1 {
+			height: 5px;
+			width: 16px;
+			top: 0;
+			left: 6px;
+			&:before {
+				border-width: 0 5px 5px 0;
+				border-right-color: inherit;
+				left: -5px;
+			}
+			&:after {
+				border-width: 0 0 5px 5px;
+				border-left-color: inherit;
+				right: -5px;
+			}
+		}
+		.d2 {
+			height: 5px;
+			width: 16px;
+			top: 24px;
+			left: 6px;
+			&:before {
+				border-width: 3px 4px 2px;
+				border-right-color: inherit;
+				left: -8px;
+			}
+			&:after {
+				border-width: 3px 4px 2px;
+				border-left-color: inherit;
+				right: -8px;
+			}
+		}
+		.d3 {
+			height: 5px;
+			width: 16px;
+			top: 48px;
+			left: 6px;
+			&:before {
+				border-width: 5px 5px 0 0;
+				border-right-color: inherit;
+				left: -5px;
+			}
+			&:after {
+				border-width: 5px 0 0 5px;
+				border-left-color: inherit;
+				right: -5px;
+			}
+		}
+		.d4 {
+			width: 5px;
+			height: 14px;
+			top: 7px;
+			left: 0;
+			&:before {
+				border-width: 0 5px 5px 0;
+				border-bottom-color: inherit;
+				top: -5px;
+			}
+			&:after {
+				border-width: 0 0 5px 5px;
+				border-left-color: inherit;
+				bottom: -5px;
+			}
+		}
+		.d5 {
+			width: 5px;
+			height: 14px;
+			top: 7px;
+			right: 0;
+			&:before {
+				border-width: 0 0 5px 5px;
+				border-bottom-color: inherit;
+				top: -5px;
+			}
+			&:after {
+				border-width: 5px 0 0 5px;
+				border-top-color: inherit;
+				bottom: -5px;
+			}
+		}
+		.d6 {
+			width: 5px;
+			height: 14px;
+			top: 32px;
+			left: 0;
+			&:before {
+				border-width: 0 5px 5px 0;
+				border-bottom-color: inherit;
+				top: -5px;
+			}
+			&:after {
+				border-width: 0 0 5px 5px;
+				border-left-color: inherit;
+				bottom: -5px;
+			}
+		}
+		.d7 {
+			width: 5px;
+			height: 14px;
+			top: 32px;
+			right: 0;
+			&:before {
+				border-width: 0 0 5px 5px;
+				border-bottom-color: inherit;
+				top: -5px;
+			}
+			&:after {
+				border-width: 5px 0 0 5px;
+				border-top-color: inherit;
+				bottom: -5px;
+			}
+		}
+		.d1-big {
+			height: 10px;
+			width: 32px;
+			top: 0px;
+			left: 12px;
+			&:before {
+				border-width: 0 10px 10px 0;
+				border-right-color: inherit;
+				left: -10px;
+			}
+			&:after {
+				border-width: 0 0 10px 10px;
+				border-left-color: inherit;
+				right: -10px;
+			}
+		}
+		.d2-big {
+			height: 10px;
+			width: 32px;
+			top: 48px;
+			left: 12px;
+			&:before {
+				border-width: 6px 8px 4px;
+				border-right-color: inherit;
+				left: -16px;
+			}
+			&:after {
+				border-width: 6px 8px 4px;
+				border-left-color: inherit;
+				right: -16px;
+			}
+		}
+		.d3-big {
+			height: 10px;
+			width: 32px;
+			top: 96px;
+			left: 12px;
+			&:before {
+				border-width: 10px 10px 0 0;
+				border-right-color: inherit;
+				left: -10px;
+			}
+			&:after {
+				border-width: 10px 0 0 10px;
+				border-left-color: inherit;
+				right: -10px;
+			}
+		}
+		.d4-big {
+			width: 10px;
+			height: 28px;
+			top: 14px;
+			left: 0px;
+			&:before {
+				border-width: 0 10px 10px 0;
+				border-bottom-color: inherit;
+				top: -10px;
+			}
+			&:after {
+				border-width: 0 0 10px 10px;
+				border-left-color: inherit;
+				bottom: -10px;
+			}
+		}
+		.d5-big {
+			width: 10px;
+			height: 28px;
+			top: 14px;
+			right: 0px;
+			&:before {
+				border-width: 0 0 10px 10px;
+				border-bottom-color: inherit;
+				top: -10px;
+			}
+			&:after {
+				border-width: 10px 0 0 10px;
+				border-top-color: inherit;
+				bottom: -10px;
+			}
+		}
+		.d6-big {
+			width: 10px;
+			height: 28px;
+			top: 64px;
+			left: 0px;
+			&:before {
+				border-width: 0 10px 10px 0;
+				border-bottom-color: inherit;
+				top: -10px;
+			}
+			&:after {
+				border-width: 0 0 10px 10px;
+				border-left-color: inherit;
+				bottom: -10px;
+			}
+		}
+		.d7-big {
+			width: 10px;
+			height: 28px;
+			top: 64px;
+			right: 0px;
+			&:before {
+				border-width: 0 0 10px 10px;
+				border-bottom-color: inherit;
+				top: -10px;
+			}
+			&:after {
+				border-width: 10px 0 0 10px;
+				border-top-color: inherit;
+				bottom: -10px;
+			}
+		}
+	}
+
+  .speed-limit-circle {
+		position: relative;
+		left: 202px;
+		top: -165px;
+	  margin: 7em auto;
+	  width: 8em;
+	  height: 8em;
+	  border: 0.5em solid;
+	  border-radius: 50%;
+	}
+
+	.rpm-circle {
+  	position: relative;
+		left: 291px;
+		top: 31px;
+  	width: 6em;
+		height: 6em;
+    .rpm-segment {
+    	overflow: hidden;
+    	position: absolute;
+    	top: -1em; right: 50%; bottom: 50%; left: -1em;
+    	transform-origin: 100% 100%;
+    }
+    .rpm-segment:before {
+    	box-sizing: border-box;
+    	display: block;
+    	border: solid 0.5em;
+			border-color: inherit;
+			opacity: 0.2;
+    	width: 200%; height: 200%;
+    	border-radius: 50%;
+    	// <!-- higher the skewX degree, the smaller the arc segment -->
+    	transform: skewX(-40deg);
+    	content: '';
+    }
+    .rpm-segment.one {
+      transform: rotate(90deg) skewX(40deg);
+    }
+    .rpm-segment.one.active:before {
+		  opacity: 1;
+		}
+    .rpm-segment.two {
+      transform: rotate(150deg) skewX(40deg);
+    }
+    .rpm-segment.two.active:before {
+		  opacity: 1;
+		}
+    .rpm-segment.three {
+      transform: rotate(210deg) skewX(40deg);
+    }
+    .rpm-segment.three.active:before {
+		  opacity: 1;
+		}
+    .rpm-segment.four {
+      transform: rotate(270deg) skewX(40deg);
+    }
+    .rpm-segment.four.active:before {
+		  opacity: 1;
+		}
+    .rpm-segment.five {
+      transform: rotate(330deg) skewX(40deg);
+    }
+    .rpm-segment.five.active:before {
+		  opacity: 1;
+		}
+    .rpm-segment.six {
+      transform: rotate(30deg) skewX(40deg);
+    }
+    .rpm-segment.six.active:before {
+		  opacity: 1;
+		}
+  }
+}
+
+.button-holder {
+	text-align: center;
+	padding-bottom: 100px;
+}
