@@ -13,13 +13,13 @@
       </div>
   		<span class="digits digits-big speed">
         <div [ngClass]="speed_hundreds">
-          <span *ngFor="#segment_number of segment_numbers" class="d{{segment_number}}-big"></span>
+          <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}-big"></span>
         </div>
         <div [ngClass]="speed_tens">
-          <span *ngFor="#segment_number of segment_numbers" class="d{{segment_number}}-big"></span>
+          <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}-big"></span>
         </div>
         <div [ngClass]="speed_ones">
-          <span *ngFor="#segment_number of segment_numbers" class="d{{segment_number}}-big"></span>
+          <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}-big"></span>
         </div>
         <div class="speed_unit unit">
           {{ speed_unit }}
@@ -27,11 +27,11 @@
       </span>
       <span class="digits rpm">
         <div [ngClass]="rpm_thousands">
-          <span *ngFor="#segment_number of segment_numbers" class="d{{segment_number}}"></span>
+          <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}"></span>
         </div>
         <div class="decimal"></div>
         <div [ngClass]="rpm_hundreds">
-          <span *ngFor="#segment_number of segment_numbers" class="d{{segment_number}}"></span>
+          <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}"></span>
         </div>
         <div class="rpm_unit unit">
           {{ rpm_unit }}
@@ -39,11 +39,11 @@
       </span>
       <span class="digits speed-limit">
         <div [ngClass]="speed_limit_tens">
-          <span *ngFor="#segment_number of segment_numbers" class="d{{segment_number}}"></span>
+          <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}"></span>
         </div>
         <div class="decimal clear"></div>
         <div [ngClass]="speed_limit_ones">
-          <span *ngFor="#segment_number of segment_numbers" class="d{{segment_number}}"></span>
+          <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}"></span>
         </div>
         <div class="speed_limit_unit unit">
           {{ speed_limit_unit }}

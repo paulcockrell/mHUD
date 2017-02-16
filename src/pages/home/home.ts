@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Clock } from '../../components/clock/clock';
 import { Platform } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { Sensors, IDataObj } from '../../providers/sensors';
