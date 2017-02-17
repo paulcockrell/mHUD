@@ -41,4 +41,7 @@ ionic run android --device
 # Debug
 You can debug in the Chrome browser, while your phone is connected with the app running.
 
-Point Chrome to chrome://inspect/#devices
+Point Chrome to 
+```
+chrome://inspect/#devices
+```
