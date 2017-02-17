@@ -7,7 +7,7 @@ import { Jsonp } from '@angular/http';
 declare var cordova: any;
 
 const request_url_road_information: string = 'https://route.cit.api.here.com/routing/7.2/getlinkinfo.json';
-const here_map_app_id: string = 'UwStla46BWLH8ScOI6V3';
+const here_map_app_id: string = 'UwStla46BWLH8ScOl6V3';
 const here_map_app_code: string = '2fh5ihUvdlJ0csRT_pjnHQ';
 
 export interface IDataObj {
@@ -35,6 +35,8 @@ export class Sensors {
   constructor(private jsonp: Jsonp) { }
 
   start(frequency: number): void {
+    this.polling = true;
+
     this.startGeolocation();
     this.startCompass(frequency);
     this.startAcceleration(frequency);
@@ -92,8 +94,10 @@ export class Sensors {
     if (!this.polling) return;
 
     let geolocation = this.data().geolocation;
-    if (geolocation.coords.latitude && geolocation.coord.longitude)
-      this.getSpeedLimit().then(res => {
+console.log("geolocation stuff: ", geolocation.coords);
+    if (geolocation.coords.latitude && geolocation.coords.longitude)
+      this.getSpeedLimit(geolocation.coords.latitude, geolocation.coords.longitude).then(res => {
+console.log(res);
         this.speedLimit = res;
         setTimeout(() => this.startRoadInfo(), this.delay);
       });
@@ -125,10 +129,9 @@ export class Sensors {
     }
   }
 
-  private getSpeedLimit() {
+  private getSpeedLimit(latitude: number, longitude: number) {
     let url: string = request_url_road_information;
-    let geolocation = this.data().geolocation;
-    let waypoint = (geolocation.coords && geolocation.coords.latitude && geolocation.coords.longitude) ? `${geolocation.coords.latitude},${geolocation.coords.longitude}` : null;
+    let waypoint = `${latitude},${longitude}`;
 
     return new Promise((resolve, reject) => {
       if (waypoint === null) resolve(null);
@@ -136,6 +139,7 @@ export class Sensors {
       url += `?waypoint=${waypoint}&app_id=${here_map_app_id}&app_code=${here_map_app_code}&jsoncallback=JSONP_CALLBACK`;
       this.jsonp.get(url)
         .subscribe(res => {
+console.log("XXX!", res);
           if (res && res.status === 200) {
             resolve(res.json().response.link[0].speedLimit);
           }
@@ -210,13 +214,13 @@ export class Sensors {
   private blank_geolocation(): Object {
     return {
       coords: {
-        latitude: 0,
-        longitude: 0,
-        altitude: 0,
-        accuracy: 0,
-        altitudeAccuracy: 0,
-        heading: 0,
-        speed: 0
+        latitude: null,
+        longitude: null,
+        altitude: null,
+        accuracy: null,
+        altitudeAccuracy: null,
+        heading: null,
+        speed: null
       }
     }
   }
