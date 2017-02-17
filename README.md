@@ -3,6 +3,8 @@ This is an Ionic 2 Typescript mobile heads up display application.
 It uses the phones sensors to obtain speed, location and gforce values for display.
 It uses here maps to get the road speed which forms part of the display.
 
+![Image](./hud-image.jpg?raw=true)
+
 # Clone this repo
 ```
 git clone git@github.com:paulcockrell/mHUD.git
