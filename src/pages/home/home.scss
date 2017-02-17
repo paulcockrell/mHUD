@@ -108,7 +108,7 @@ page-home {
         left: 20px;
         padding: 10px;
       }
-      .rpm {
+      .gforce {
         position: absolute;
         height: 70px;
         width: 210px;
@@ -124,7 +124,7 @@ page-home {
         .speed_limit_unit {
           padding-top: 38px !important;
         }
-        .rpm_unit {
+        .gforce_unit {
           padding-top: 38px !important;
         }
         .unit {
@@ -297,7 +297,7 @@ page-home {
         margin: 0 8px !important;
       }
     }
-    .digits.rpm {
+    .digits.gforce {
       div {
         margin: 0 0px;
       }
@@ -750,19 +750,19 @@ page-home {
       border-radius: 50%;
     }
   
-    .rpm-circle {
+    .gforce-circle {
       position: relative;
       left: 291px;
       top: 31px;
       width: 6em;
       height: 6em;
-      .rpm-segment {
+      .gforce-segment {
         overflow: hidden;
         position: absolute;
         top: -1em; right: 50%; bottom: 50%; left: -1em;
         transform-origin: 100% 100%;
       }
-      .rpm-segment:before {
+      .gforce-segment:before {
         box-sizing: border-box;
         display: block;
         border: solid 0.5em;
@@ -774,40 +774,40 @@ page-home {
         transform: skewX(-40deg);
         content: '';
       }
-      .rpm-segment.one {
+      .gforce-segment.one {
         transform: rotate(90deg) skewX(40deg);
       }
-      .rpm-segment.one.active:before {
+      .gforce-segment.one.active:before {
         opacity: 1;
       }
-      .rpm-segment.two {
+      .gforce-segment.two {
         transform: rotate(150deg) skewX(40deg);
       }
-      .rpm-segment.two.active:before {
+      .gforce-segment.two.active:before {
         opacity: 1;
       }
-      .rpm-segment.three {
+      .gforce-segment.three {
         transform: rotate(210deg) skewX(40deg);
       }
-      .rpm-segment.three.active:before {
+      .gforce-segment.three.active:before {
         opacity: 1;
       }
-      .rpm-segment.four {
+      .gforce-segment.four {
         transform: rotate(270deg) skewX(40deg);
       }
-      .rpm-segment.four.active:before {
+      .gforce-segment.four.active:before {
         opacity: 1;
       }
-      .rpm-segment.five {
+      .gforce-segment.five {
         transform: rotate(330deg) skewX(40deg);
       }
-      .rpm-segment.five.active:before {
+      .gforce-segment.five.active:before {
         opacity: 1;
       }
-      .rpm-segment.six {
+      .gforce-segment.six {
         transform: rotate(30deg) skewX(40deg);
       }
-      .rpm-segment.six.active:before {
+      .gforce-segment.six.active:before {
         opacity: 1;
       }
     }
