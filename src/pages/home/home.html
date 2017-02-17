@@ -2,12 +2,12 @@
   <div id="clock" [ngClass]="theme" (click)="changeTheme()">
     <div class="display">
       <div class="rpm-circle">
-        <div class="rpm-segment one" [ngClass]="{'active': rpm_thousands_idx > 0}"></div>
-        <div class="rpm-segment two" [ngClass]="{'active': rpm_thousands_idx > 1}"></div>
-        <div class="rpm-segment three" [ngClass]="{'active': rpm_thousands_idx > 2}"></div>
-        <div class="rpm-segment four" [ngClass]="{'active': rpm_thousands_idx > 3}"></div>
-        <div class="rpm-segment five" [ngClass]="{'active': rpm_thousands_idx > 4}"></div>
-        <div class="rpm-segment six" [ngClass]="{'active': rpm_thousands_idx > 5}"></div>
+        <div class="rpm-segment one" [ngClass]="{'active': gforce_tens_idx > 0}"></div>
+        <div class="rpm-segment two" [ngClass]="{'active': gforce_tens_idx > 1}"></div>
+        <div class="rpm-segment three" [ngClass]="{'active': gforce_tens_idx > 2}"></div>
+        <div class="rpm-segment four" [ngClass]="{'active': gforce_tens_idx > 3}"></div>
+        <div class="rpm-segment five" [ngClass]="{'active': gforce_tens_idx > 4}"></div>
+        <div class="rpm-segment six" [ngClass]="{'active': gforce_tens_idx > 5}"></div>
       </div>
       <div class="speed-limit-circle">
       </div>
@@ -26,15 +26,15 @@
         </div>
       </span>
       <span class="digits rpm">
-        <div [ngClass]="rpm_thousands">
+        <div [ngClass]="gforce_tens">
           <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}"></span>
         </div>
         <div class="decimal"></div>
-        <div [ngClass]="rpm_hundreds">
+        <div [ngClass]="gforce_ones">
           <span *ngFor="let segment_number of segment_numbers" class="d{{segment_number}}"></span>
         </div>
         <div class="rpm_unit unit">
-          {{ rpm_unit }}
+          {{ gforce_unit }}
         </div>
       </span>
       <span class="digits speed-limit">

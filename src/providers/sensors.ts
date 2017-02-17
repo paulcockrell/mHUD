@@ -6,15 +6,16 @@ import { Jsonp } from '@angular/http';
 
 declare var cordova: any;
 
-const request_url_road_information: string = 'https://legacy.route.cit.api.here.com/routing/6.2/getlinkinfo.json';
-const here_map_app_id: string = '';
-const here_map_app_code: string = '';
+const request_url_road_information: string = 'https://route.cit.api.here.com/routing/7.2/getlinkinfo.json';
+const here_map_app_id: string = 'UwStla46BWLH8ScOI6V3';
+const here_map_app_code: string = '2fh5ihUvdlJ0csRT_pjnHQ';
 
 export interface IDataObj {
   geolocation: any,
   acceleration: any,
   compass: any,
-  roadInfo: any
+  speedLimit: number,
+  gforce: number
 }
 
 @Injectable()
@@ -25,8 +26,9 @@ export class Sensors {
   private watchCompass: any;
   private acceleration: any;
   private compass: any;
+  private gforce: number;
   private geolocation: any;
-  private roadInfo: any;
+  private speedLimit: any;
   private delay: number = 10000;
   private polling: boolean = false;
 
@@ -36,12 +38,14 @@ export class Sensors {
     this.startGeolocation();
     this.startCompass(frequency);
     this.startAcceleration(frequency);
+    this.startRoadInfo();
   }
 
   stop(): void {
     this.stopGeolocation();
     this.stopCompass();
     this.stopAcceleration();
+    this.stopRoadInfo();
   }
 
   startGeolocation(): void {
@@ -49,7 +53,6 @@ export class Sensors {
       .watchPosition({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true })
       .subscribe((geolocation) => {
         this.geolocation = geolocation;
-        this.getRoadInformation().then(res => this.roadInfo = res);
       });
   }
 
@@ -62,7 +65,7 @@ export class Sensors {
     this.watchCompass = DeviceOrientation
       .watchHeading({frequency: frequency})
       .subscribe((data: any) => {
-        this.compass = data;
+        this.compass = this.translateCompass(data);
       });
   }
 
@@ -76,6 +79,7 @@ export class Sensors {
       .watchAcceleration({frequency: frequency})
       .subscribe((acceleration: any) => {
         this.acceleration = acceleration;
+        this.gforce = this.calculateGforce(acceleration);
       });
   }
 
@@ -84,24 +88,32 @@ export class Sensors {
     if (this.watchAcceleration) this.watchAcceleration.unsubscribe();
   }
 
-  startPolling() {
-    this.polling = true;
-    this.poll();
-  }
+  startRoadInfo() {
+    if (!this.polling) return;
 
-  poll() {
     let geolocation = this.data().geolocation;
-    if (!this.polling || !geolocation.coords.latitude || !geolocation.coord.longitude) return;
-
-    this.getRoadInformation().then(res => this.roadInfo = res);
-    setTimeout(() => this.poll(), this.delay);
+    if (geolocation.coords.latitude && geolocation.coord.longitude)
+      this.getSpeedLimit().then(res => {
+        this.speedLimit = res;
+        setTimeout(() => this.startRoadInfo(), this.delay);
+      });
+    else
+      setTimeout(() => this.startRoadInfo(), this.delay);
   }
 
-  stopPolling() {
+  stopRoadInfo() {
     this.polling = false;
   }
 
-  // Get speed limit via roadInfo.SpeedLimit
+  private calculateGforce(acceleration: any): number {
+    let x = acceleration.x;
+    let y = acceleration.y;
+    let z = acceleration.z;
+
+    let gforce = Math.sqrt(x * x + y * y + z * z) / 9.80665;
+    return gforce;
+  }
+
   public formatRoadSpeed(value: number, unit: string = '') {
     switch (unit.toLowerCase()) {
       case 'kph':
@@ -113,7 +125,7 @@ export class Sensors {
     }
   }
 
-  private getRoadInformation() {
+  private getSpeedLimit() {
     let url: string = request_url_road_information;
     let geolocation = this.data().geolocation;
     let waypoint = (geolocation.coords && geolocation.coords.latitude && geolocation.coords.longitude) ? `${geolocation.coords.latitude},${geolocation.coords.longitude}` : null;
@@ -125,7 +137,7 @@ export class Sensors {
       this.jsonp.get(url)
         .subscribe(res => {
           if (res && res.status === 200) {
-            resolve(res.json().Response.Link[0]);
+            resolve(res.json().response.link[0].speedLimit);
           }
           else {
             reject(null);
@@ -134,49 +146,102 @@ export class Sensors {
     });
   }
 
+  private translateCompass(data) {
+    let name: string;
+    let shortName: string;
+    let input: number;
+
+    input = data.trueHeading > 0 ? ( data.trueHeading || 1 ) / 11.25 : 1 / 11.25
+    input = input + .5 | 0
+    name = this.calculatePoint(input)
+    shortName = this.getShortName(name)
+    name = name[0].toUpperCase() + name.slice(1)
+
+    return {
+      name: name,
+      shortName: shortName
+    }
+  }
+
+  private calculatePoint(input: number) {
+    input = (input / 8) | 0 % 4;
+    let j: number = input % 8;
+    let cardinal: string[] = ['north', 'east', 'south', 'west'];
+    let pointDesc: string[] = ['1', '1 by 2', '2-C', 'C by 1', 'C', 'C by 2', '2-C', '2 by 1'];
+    let str1: string;
+    let str2: string;
+    let strC: string;
+    let point;
+
+    str1 = cardinal[input];
+    str2 = cardinal[(input + 1) % 4];
+    strC = (str1 == cardinal[0] || str1 == cardinal[2]) ? str1 + str2 : str2 + str1;
+
+    point =pointDesc[j]
+      .replace( /1/, str1 )
+      .replace( /2/, str2 )
+      .replace( /C/, strC );
+
+    return point;
+  }
+
+  private getShortName(name: string) {
+    let short_name = name
+      .replace( /north/g, 'N' )
+      .replace( /east/g, 'E' )
+      .replace( /south/g, 'S' )
+      .replace( /west/g, 'W' )
+      .replace( /by/g, 'b' )
+      .replace( /[\s-]/g, '');
+
+    return short_name;
+  }
+
   data(): IDataObj {
     return {
       acceleration: this.acceleration || this.blank_acceleration(),
       compass: this.compass || this.blank_compass(),
       geolocation: this.geolocation || this.blank_geolocation(),
-      roadInfo: this.roadInfo || this.blank_roadInfo()
+      speedLimit: this.speedLimit || this.blank_speedLimit(),
+      gforce: this.gforce || this.blank_gforce()
     }
   }
 
   private blank_geolocation(): Object {
     return {
       coords: {
-        latitude: null,
-        longitude: null,
-        altitude: null,
-        accuracy: null,
-        altitudeAccuracy: null,
-        heading: null,
-        speed: null
+        latitude: 0,
+        longitude: 0,
+        altitude: 0,
+        accuracy: 0,
+        altitudeAccuracy: 0,
+        heading: 0,
+        speed: 0
       }
     }
   }
 
   private blank_acceleration(): Object {
     return {
-      x: null,
-      y: null,
-      z: null
+      x: 0,
+      y: 0,
+      z: 0
     }
   }
 
   private blank_compass(): Object {
     return {
-      magneticHeading: null,
-      trueHeading: null,
-      headingAccuracy: null
+      name: "",
+      shortName: ""
     }
   }
 
-  private blank_roadInfo(): Object {
-    return {
-      speedLimit: null
-    }
+  private blank_speedLimit(): number {
+    return 0;
+  }
+
+  private blank_gforce(): number {
+    return 0;
   }
 
 }
