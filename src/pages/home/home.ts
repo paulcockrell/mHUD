@@ -77,7 +77,7 @@ export class HomePage {
   startReadSensorData(): void {
     this.requestData = setInterval(() => {
       let data = this.sensors.data();  
-      this.speed = data.geolocation.coords.speed;
+      this.speed = this.sensors.formatRoadSpeed(data.geolocation.coords.speed, 'mph');
       this.heading = data.compass.trueHeading;
       this.gforce = data.gforce;
       this.speedLimit = data.speedLimit;
