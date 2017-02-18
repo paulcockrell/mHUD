@@ -94,10 +94,8 @@ export class Sensors {
     if (!this.polling) return;
 
     let geolocation = this.data().geolocation;
-console.log("geolocation stuff: ", geolocation.coords);
     if (geolocation.coords.latitude && geolocation.coords.longitude)
       this.getSpeedLimit(geolocation.coords.latitude, geolocation.coords.longitude).then(res => {
-console.log(res);
         this.speedLimit = res;
         setTimeout(() => this.startRoadInfo(), this.delay);
       });
