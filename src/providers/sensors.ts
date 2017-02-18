@@ -29,7 +29,7 @@ export class Sensors {
   private gforce: number;
   private geolocation: any;
   private speedLimit: any;
-  private delay: number = 10000;
+  private delay: number = 20000;
   private polling: boolean = false;
 
   constructor(private jsonp: Jsonp) { }
@@ -96,8 +96,8 @@ export class Sensors {
     let geolocation = this.data().geolocation;
     if (geolocation.coords.latitude && geolocation.coords.longitude)
       this.getSpeedLimit(geolocation.coords.latitude, geolocation.coords.longitude).then(res => {
-        let cleanSpeedLimit = Math.round(res / 10) * 10;
-        this.speedLimit = this.formatRoadSpeed(cleanSpeedLimit, 'mph');
+        let speedLimit = this.formatRoadSpeed(Number(res), 'mph');
+        this.speedLimit = Math.round(speedLimit / 10) * 10; 
         setTimeout(() => this.startRoadInfo(), this.delay);
       });
     else
