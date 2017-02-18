@@ -96,7 +96,7 @@ export class Sensors {
     let geolocation = this.data().geolocation;
     if (geolocation.coords.latitude && geolocation.coords.longitude)
       this.getSpeedLimit(geolocation.coords.latitude, geolocation.coords.longitude).then(res => {
-        this.speedLimit = res;
+        this.speedLimit = this.formatRoadSpeed(res, 'mph');
         setTimeout(() => this.startRoadInfo(), this.delay);
       });
     else
@@ -137,7 +137,6 @@ export class Sensors {
       url += `?waypoint=${waypoint}&app_id=${here_map_app_id}&app_code=${here_map_app_code}&jsoncallback=JSONP_CALLBACK`;
       this.jsonp.get(url)
         .subscribe(res => {
-console.log("XXX!", res);
           if (res && res.status === 200) {
             resolve(res.json().response.link[0].speedLimit);
           }
