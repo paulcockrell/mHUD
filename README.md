@@ -35,7 +35,8 @@ const here_map_app_code: string = 'XXX';
 
 # Run
 ```
-ionic run android --device
+ionic run android --device # Development mode
+ionic run android --prod --device # Production mode
 ```
 
 # Debug
